@@ -1,0 +1,67 @@
+<div id="wrapper">
+  <h3>Add a review for {{ movie.title }}</h3>
+
+  <small *ngIf="errors.name">
+    {{ errors.name.message }}
+  </small>
+
+  <small *ngIf="errors.stars">
+    {{ errors.stars.message }}
+  </small>
+  
+  <small *ngIf="errors.content">
+    {{ errors.content.message }}
+  </small>
+
+  <form (submit)="onSubmitCreate($event)" #form="ngForm">
+    <label>Your Name</label>
+    <small 
+      class="errors" 
+      [hidden]="name.valid || (name.untouched && !form.submitted)"
+    >
+      Name is required (Minimum of 3 characters)
+    </small>
+    <input 
+      type="text" 
+      name="newReview.name" 
+      required minlength="3" 
+      [(ngModel)]="newReview.name" 
+      #name="ngModel" 
+    />
+    <label>Stars</label>
+    <small 
+      class="errors" 
+      [hidden]="stars.valid || (stars.untouched && !form.submitted)"
+    >
+      Must give a rating
+    </small>
+    <select 
+      name="newReview.stars" 
+      [(ngModel)]="newReview.stars" 
+      #stars="ngModel"
+    >
+      <option value="1">1</option>
+      <option value="2">2</option>
+      <option value="3" selected>3</option>
+      <option value="4">4</option>
+      <option value="5">5</option>
+    </select>
+    <label>Your Review</label>
+    <small 
+      class="errors" 
+      [hidden]="content.valid || (content.untouched && !form.submitted)"
+    >
+      Review is required (Minimum of 3 characters)
+    </small>
+    <textarea 
+      name="newReview.content" 
+      required minlength="3" 
+      [(ngModel)]="newReview.content" 
+      #content="ngModel" 
+      cols="30" 
+      rows="10"
+    ></textarea>
+    <button class="add" type="submit" name="submit">Submit</button>
+    <button class="cancel" [routerLink]="['/']">Cancel</button>
+  </form>
+</div>
